@@ -1,0 +1,12 @@
+mybatis:
+  typeAliasesPackage: com.whu.onelist.vo
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://193.114.44.141:3306/one_list_schema?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    username: onelist
+    password: onelist
+    driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 8001

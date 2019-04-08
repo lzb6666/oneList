@@ -1,6 +1,5 @@
-package com.whu.onelist;
+package com.whu.onelist.util;
 
-import com.whu.onelist.util.SnowFlake;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,11 +7,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OnelistApplicationTests {
+public class SnowFlakeTest {
 
-	@Test
-	public void contextLoads() {
-
-	}
-
+    @Test
+    public void nextId(){
+        System.out.println(SnowFlake.nextId());
+        System.out.println(SnowFlake.getDataCenterId());
+    }
 }
