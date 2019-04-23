@@ -5,6 +5,12 @@ public class User {
     private String phoneNum;
     private String email;
 
+    public User(Long userID, String phoneNum, String email) {
+        this.userID = userID;
+        this.phoneNum = phoneNum;
+        this.email = email;
+    }
+
     public Long getUserID() {
         return userID;
     }

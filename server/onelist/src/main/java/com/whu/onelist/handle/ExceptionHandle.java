@@ -10,6 +10,6 @@ public class ExceptionHandle {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity runtimeExceptionHandler(RuntimeException e){
-        return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

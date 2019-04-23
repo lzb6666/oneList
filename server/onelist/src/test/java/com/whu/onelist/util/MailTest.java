@@ -16,7 +16,7 @@ public class MailTest {
     @Test
     public void mailTest(){
         try {
-            mailService.sendMail("1339675740@qq.com","test","测试用");
+            mailService.sendMail("q1339675740@163.com","test","测试用");
         } catch (MessagingException e) {
             e.printStackTrace();
         }
