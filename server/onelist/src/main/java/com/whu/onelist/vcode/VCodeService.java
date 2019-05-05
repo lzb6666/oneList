@@ -50,7 +50,8 @@ public class VCodeService {
 
     void sendVCode(String email,String phoneNum,Integer type) throws MessagingException {
         String code;
-        long expirationDate=System.currentTimeMillis()+300;
+        Timestamp timestamp=new Timestamp(System.currentTimeMillis()+300000);
+        //long expirationDate=System.currentTimeMillis()/1000+300;
         String registry;
         if (phoneNum==null||phoneNum.equals("")){
             code=sendMailMsg(email,type);
@@ -59,8 +60,8 @@ public class VCodeService {
             code=sendPhoneMsg(phoneNum,type);
             registry=phoneNum;
         }
-        if (vCodeMapper.insert(registry,code,type,expirationDate)!=1){
-            log.error("插入验证码出错"+registry+code+type+expirationDate);
+        if (vCodeMapper.insert(registry,code,type,timestamp)!=1){
+            log.error("插入验证码出错"+registry+code+type+timestamp);
             throw new RuntimeException("未知错误");
         }
 
@@ -73,7 +74,7 @@ public class VCodeService {
         }else {
             registry=phoneNum;
         }
-        boolean result=vCodeMapper.select(registry,vcode,2,System.currentTimeMillis())==1;
+        boolean result=vCodeMapper.select(registry,vcode,2,new Timestamp(System.currentTimeMillis()))==1;
         if (result){
             vCodeMapper.delete(registry,2);
         }
@@ -87,7 +88,7 @@ public class VCodeService {
         }else {
             registry=phoneNum;
         }
-        if (vCodeMapper.select(registry,vcode,1,System.currentTimeMillis())==1){
+        if (vCodeMapper.select(registry,vcode,1,new Timestamp(System.currentTimeMillis()))>=1){
             User user=userService.createUser(phoneNum,email);
             if (user!=null){
                 vCodeMapper.delete(registry,1);

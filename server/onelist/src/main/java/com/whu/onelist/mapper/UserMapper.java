@@ -15,12 +15,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserMapper {
 
-    @Insert("insert into user (user_id,phoneNum,email) values {#{userID},#{phoneNum},#{email}}")
+    @Insert("insert into user (user_id,phone_num,email) values (#{userID},#{phoneNum},#{email})")
     int insert(User user);
 
-    @Update("update user set password=#{pwd} where userID=#{userID}")
+    @Update("update user set password=#{pwd} where user_id=#{userID}")
     int updatePwd(@Param("userID")Long userID,@Param("pwd") String pwd);
 
-    @Select("select user_id,phoneNum,email from user where user_id=#{userID} and password=#{pwd}")
-    User login(@Param("userID")Long userID,@Param("pwd") String pwd);
+    @Select("select user_id,phone_num,email from user where email=#{email} and password=#{pwd}")
+    User loginByEmail(@Param("email")String email,@Param("pwd") String pwd);
+
+    @Select("select user_id,phone_num,email from user where phone_num=#{phoneNum} and password=#{pwd}")
+    User loginByPhone(@Param("phoneNum")String phoneNum,@Param("pwd") String pwd);
 }

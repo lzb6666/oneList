@@ -9,7 +9,7 @@ import org.apache.ibatis.jdbc.SQL;
  * @date:2019/4/23
  */
 public class MatterMapperProvider {
-    public SQL updateSql(Matter matter){
+    public String updateSql(Matter matter){
 
         return new SQL(){
             {
@@ -32,6 +32,6 @@ public class MatterMapperProvider {
                 WHERE("matter_id=#{matterID}");
                 WHERE("user_id=#{userID}");
             }
-        };
+        }.toString();
     }
 }

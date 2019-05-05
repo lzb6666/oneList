@@ -17,42 +17,45 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/{userID}")
-    public ResponseEntity login(@PathVariable String userID, String password){
-        User user=userService.findUser(userID,password);
+    @GetMapping("")
+    public ResponseEntity login(String phoneNum,String email, String password, HttpSession session){
+        User user=userService.findUser(email,phoneNum,password);
         if (user==null){
-            ResultMsg msg=new ResultMsg(2,"用户名或密码错误");
+            ResultMsg msg=new ResultMsg(ResultMsg.Type.FAIL,"用户名或密码错误");
             return new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);
         }else{
+            session.setAttribute("userID",user.getUserID());
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
     }
 
+
+
     @PostMapping("")
     public ResponseEntity register(String password, HttpSession session){
-        String userID=(String)session.getAttribute("userID");
+        Long userID=(Long)session.getAttribute("userID");
         Boolean register=(Boolean) session.getAttribute("registry");
         if (register==null||!register){
-            return new ResponseEntity<>(new ResultMsg(2,"非法请求"),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.FAIL,"非法请求"),HttpStatus.BAD_REQUEST);
         }
         if (userService.updatePwd(userID,password)){
-            return new ResponseEntity<>(new ResultMsg(1,"注册成功"),HttpStatus.OK);
+            return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.SUCCESS,"注册成功"),HttpStatus.OK);
         }else {
-            return new ResponseEntity<>(new ResultMsg(2,"注册失败"),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.FAIL,"注册失败"),HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("/{userID}")
     public ResponseEntity resetPwd(String newPassword,HttpSession session){
-        String userID=(String)session.getAttribute("userID");
+        Long userID=(Long)session.getAttribute("userID");
         Boolean forget=(Boolean) session.getAttribute("forget");
         if (forget==null||!forget){
-            return new ResponseEntity<>(new ResultMsg(2,"非法请求"),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.FAIL,"非法请求"),HttpStatus.BAD_REQUEST);
         }
         if (userService.updatePwd(userID,newPassword)){
-            return new ResponseEntity<>(new ResultMsg(1,"修改密码成功"),HttpStatus.OK);
+            return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.SUCCESS,"修改密码成功"),HttpStatus.OK);
         }else {
-            return new ResponseEntity<>(new ResultMsg(2,"修改密码失败"),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.FAIL,"修改密码失败"),HttpStatus.BAD_REQUEST);
         }
     }
 

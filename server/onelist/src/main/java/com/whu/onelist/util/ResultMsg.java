@@ -1,6 +1,10 @@
 package com.whu.onelist.util;
 
 public class ResultMsg {
+    public static class Type{
+        public static final int SUCCESS=1;
+        public static final int FAIL=2;
+    }
     private int code;
     private String message;
 

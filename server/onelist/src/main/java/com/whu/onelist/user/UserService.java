@@ -21,11 +21,15 @@ public class UserService {
 
     private UserMapper userMapper;
 
-    User findUser(String userID,String password){
-        return userMapper.login(userID,password);
+    User findUser(String email,String phoneNum,String password){
+        if (phoneNum==null||phoneNum.equals("")){
+            return userMapper.loginByEmail(email,password);
+        }else {
+            return userMapper.loginByPhone(phoneNum,password);
+        }
     }
 
-    boolean updatePwd(String userID, String password){
+    boolean updatePwd(long userID, String password){
         return userMapper.updatePwd(userID,password)==1;
     }
 

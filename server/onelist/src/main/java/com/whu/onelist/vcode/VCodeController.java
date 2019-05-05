@@ -25,14 +25,14 @@ public class VCodeController {
     @GetMapping("/{type}")
     public ResponseEntity getVCode(@PathVariable Integer type, String email, String phoneNum) throws MessagingException {
         vCodeService.sendVCode(email, phoneNum, type);
-        return new ResponseEntity<>(new ResultMsg(1,"发送成功，请注意查收"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.SUCCESS,"发送成功，请注意查收"), HttpStatus.OK);
     }
 
-    @PostMapping("/1")
+    @PostMapping("/"+VCodeType.REGISTRY)
     public ResponseEntity vlfRegistryCode(String email, String phoneNum,String vcode,HttpSession session){
         User user=vCodeService.vlfRegistryCode(email, phoneNum, vcode);
         if (user==null){
-            return new ResponseEntity<>(new ResultMsg(2,"验证码错误"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.FAIL,"验证码错误"), HttpStatus.NOT_FOUND);
         }else {
             session.setAttribute("registry",true);
             session.setAttribute("userID",user.getUserID());
@@ -40,13 +40,13 @@ public class VCodeController {
         }
     }
 
-    @PostMapping("/2")
+    @PostMapping("/"+VCodeType.FORGET)
     public ResponseEntity vlfForgetCode(String email, String phoneNum,String vcode,HttpSession session){
         if (vCodeService.vlfForgetCode(email, phoneNum, vcode)){
             session.setAttribute("forget",true);
-            return new ResponseEntity<>(new ResultMsg(1,"验证通过"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.SUCCESS,"验证通过"), HttpStatus.OK);
         }else {
-            return new ResponseEntity<>(new ResultMsg(2,"验证码错误"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.FAIL,"验证码错误"), HttpStatus.NOT_FOUND);
         }
     }
 

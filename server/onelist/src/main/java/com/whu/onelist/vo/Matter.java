@@ -1,5 +1,9 @@
 package com.whu.onelist.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.sql.Timestamp;
+
 /**
  * @author: create by zhong
  * @description: com.whu.onelist.vo
@@ -10,7 +14,7 @@ public class Matter {
     private Long userID;
     private String caption;
     private String detail;
-    private Long remindTime;
+    private Timestamp remindTime;
     private Long remindInterval;
     private int priority;
     private int status;
@@ -47,11 +51,12 @@ public class Matter {
         this.detail = detail;
     }
 
-    public Long getRemindTime() {
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    public Timestamp getRemindTime() {
         return remindTime;
     }
 
-    public void setRemindTime(Long remindTime) {
+    public void setRemindTime(Timestamp remindTime) {
         this.remindTime = remindTime;
     }
 

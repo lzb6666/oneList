@@ -1,10 +1,13 @@
 mybatis:
   typeAliasesPackage: com.whu.onelist.vo
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
 spring:
   profiles:
     active: dev
   datasource:
-    url: jdbc:mysql://193.114.44.141:3306/one_list_schema?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://193.112.44.141:3306/one_list_schema?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong
     username: onelist
     password: onelist
     driver-class-name: com.mysql.cj.jdbc.Driver

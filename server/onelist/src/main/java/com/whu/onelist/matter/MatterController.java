@@ -26,11 +26,13 @@ public class MatterController {
     private MatterService matterService;
 
     @PostMapping("")
-    public ResponseEntity addMatter(Matter matter){
+    public ResponseEntity addMatter(Matter matter, HttpSession session){
+        Long userID=(Long)session.getAttribute("userID");
+        matter.setUserID(userID);
         if (matterService.addMatter(matter)){
-            return new ResponseEntity<>(new ResultMsg(1,"添加事件成功"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.SUCCESS,"添加事件成功"), HttpStatus.OK);
         }else {
-            return new ResponseEntity<>(new ResultMsg(2,"添加事件失败"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.FAIL,"添加事件失败"), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -39,9 +41,9 @@ public class MatterController {
         Long userID=(Long)session.getAttribute("userID");
         matter.setUserID(userID);
         if (matterService.updateMatter(matter)){
-            return new ResponseEntity<>(new ResultMsg(1,"修改事件成功"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.SUCCESS,"修改事件成功"), HttpStatus.OK);
         }else {
-            return new ResponseEntity<>(new ResultMsg(2,"修改事件失败"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.FAIL,"修改事件失败"), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -49,9 +51,9 @@ public class MatterController {
     public ResponseEntity delete(@PathVariable Long matterID,HttpSession session){
         Long userID=(Long)session.getAttribute("userID");
         if (matterService.deleteMatter(matterID,userID)){
-            return new ResponseEntity<>(new ResultMsg(1,"删除事件成功"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.SUCCESS,"删除事件成功"), HttpStatus.OK);
         }else {
-            return new ResponseEntity<>(new ResultMsg(2,"删除事件失败"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.FAIL,"删除事件失败"), HttpStatus.BAD_REQUEST);
         }
     }
 

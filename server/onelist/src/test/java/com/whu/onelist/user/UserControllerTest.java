@@ -15,6 +15,6 @@ public class UserControllerTest {
 
     @Test
     public void responseStatusTest(){
-        System.out.println(userController.login("",""));
+
     }
 }
