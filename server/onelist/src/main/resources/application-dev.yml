@@ -1,0 +1,8 @@
+snowFlake:
+  dataCenterId: 1
+  machineId: 1
+mail:
+  key: cseckzkgittlcabb
+  host: smtp.qq.com
+  protocol: smtp
+  sender: 529673457@qq.com
