@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 SPRING_BOOT_JAR_NAME='onelist-0.0.1-SNAPSHOT.jar'
 PIDS=`ps -ef |awk -v name=${SPRING_BOOT_JAR_NAME} '{if(($0~/name/)&&($0!~/awk/))print $2}'`
 if [ -z "$PIDS" ]; then
