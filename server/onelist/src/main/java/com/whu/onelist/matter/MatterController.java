@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
 
 /**
  * @author: create by zhong
@@ -63,7 +64,7 @@ public class MatterController {
     }
 
     @GetMapping("")
-    public ResponseEntity getMattersByDate(Long startTime,Long endTime,HttpSession session){
+    public ResponseEntity getMattersByDate(Timestamp startTime, Timestamp endTime, HttpSession session){
         Long userID=(Long)session.getAttribute("userID");
         return new ResponseEntity<>(matterService.selectMattersByDate(startTime,endTime,userID),HttpStatus.OK);
     }
