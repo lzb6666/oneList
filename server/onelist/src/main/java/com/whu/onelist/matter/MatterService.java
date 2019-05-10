@@ -6,6 +6,7 @@ import com.whu.onelist.vo.Matter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -43,7 +44,11 @@ public class MatterService {
         return matterMapper.select(matterID);
     }
 
-    List<Matter> selectMattersByDate(Long startTime,Long endTime,Long userID){
+    List<Matter> selectMattersByDate(Timestamp startTime, Timestamp endTime, Long userID){
+        if (startTime==null&&endTime==null){
+            startTime=new Timestamp(0);
+            endTime=new Timestamp(System.currentTimeMillis());
+        }
         return matterMapper.selectMattersByDate(startTime,endTime,userID);
     }
 }
