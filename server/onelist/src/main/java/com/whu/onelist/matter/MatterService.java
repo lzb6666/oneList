@@ -1,13 +1,16 @@
 package com.whu.onelist.matter;
 
+import com.whu.onelist.autoadd.DateHandler;
 import com.whu.onelist.mapper.MatterMapper;
 import com.whu.onelist.util.SnowFlake;
 import com.whu.onelist.vo.Matter;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author: create by zhong
@@ -16,15 +19,19 @@ import java.util.List;
  */
 @Service
 public class MatterService {
+    private static final org.slf4j.Logger log= LoggerFactory.getLogger(MatterService.class);
     //setter注入开始
     @Autowired
     public void setMatterMapper(MatterMapper matterMapper) {
         this.matterMapper = matterMapper;
     }
-
+    @Autowired
+    public void setHandler(DateHandler handler) {
+        this.handler = handler;
+    }
 
     //setter注入结束
-
+    private DateHandler handler;
     private MatterMapper matterMapper;
 
     boolean addMatter(Matter matter){
@@ -50,5 +57,19 @@ public class MatterService {
             endTime=new Timestamp(System.currentTimeMillis());
         }
         return matterMapper.selectMattersByDate(startTime,endTime,userID);
+    }
+
+    Matter autoAdd(String content,Long userID){
+        Matter matter=new Matter();
+        matter.setRemindTime(handler.process(content));
+        matter.setDetail(content);
+        matter.setUserID(userID);
+        matter.setMatterID(SnowFlake.nextId());
+        if (matterMapper.insert(matter)==1){
+            return matter;
+        }else {
+            log.error(content);
+            return null;
+        }
     }
 }
