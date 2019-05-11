@@ -68,4 +68,15 @@ public class MatterController {
         Long userID=(Long)session.getAttribute("userID");
         return new ResponseEntity<>(matterService.selectMattersByDate(startTime,endTime,userID),HttpStatus.OK);
     }
+
+    @PostMapping("/auto")
+    public ResponseEntity autoAdd(String content,HttpSession session){
+        Long userID=(Long)session.getAttribute("userID");
+        Matter matter=matterService.autoAdd(content,userID);
+        if (matter!=null){
+            return new ResponseEntity<>(matter, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(new ResultMsg(ResultMsg.Type.FAIL,"添加事件失败"), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
