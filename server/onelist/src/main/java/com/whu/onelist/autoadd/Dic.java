@@ -11,9 +11,12 @@ import java.util.HashMap;
  * Date 2019/5/10
  */
 public class Dic {
-    public HashMap dicReader(String path) throws IOException {
-        HashMap<String,Pair> map=new HashMap<String,Pair>();
-        BufferedReader reader=new BufferedReader(new FileReader(getClass().getClassLoader().getResource(path).getFile()));
+    public HashMap dicReader(String fileName) throws IOException {
+        HashMap<String,Pair> map=new HashMap<>();
+        /*InputStream path=getClass().getClassLoader().getResourceAsStream(fileName);
+        InputStreamReader reader=new InputStreamReader(path);*/
+        //BufferedReader reader=new BufferedReader(new FileReader(getClass().getClassLoader().getResource(fileName).getFile()));
+        BufferedReader reader=new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream(fileName)));
         String line=null;
         while ((line=reader.readLine())!=null){
             String keys[]=line.split(" ");

@@ -106,7 +106,7 @@ public class DateHandler {
                     if (m.find()){
                         calendar.add(field,Integer.valueOf(m.group()));
                     }*/
-                    int time=handlerMap.get(1).handler(matcher.group(),value);
+                    int time=getHandler(1).handler(matcher.group(),value);
                     calendar.add(field,time);
                 }else {
                     calendar.add(field,Integer.valueOf(value));
@@ -120,7 +120,7 @@ public class DateHandler {
         switch (field){
             case Calendar.DATE:
                 calendar.set(Calendar.HOUR,7);
-            case Calendar.HOUR:
+            case Calendar.HOUR_OF_DAY:
                 calendar.set(Calendar.MINUTE,0);
                 calendar.set(Calendar.SECOND,0);
                 break;
