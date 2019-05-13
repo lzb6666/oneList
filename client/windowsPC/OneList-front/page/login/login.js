@@ -1,7 +1,7 @@
 layui.config({
 	base : "js/"
 }).use(['form','layer'],function(){
-	var form = layui.form,
+	var form = layui.form(),
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		$ = layui.jquery;
 	//video背景
@@ -16,6 +16,10 @@ layui.config({
 	//登录按钮事件
 	form.on("submit(login)",function(data){
 		window.location.href = "../../index.html";
+		return false;
+	})
+	form.on("submit(register)",function(){
+		window.location.href = "../register/register.html";
 		return false;
 	})
 })
