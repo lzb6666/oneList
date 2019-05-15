@@ -1,0 +1,21 @@
+[{
+	"title" : "所有",
+	"icon" : "icon-computer",
+	"href" : "page/main/main.html",
+	"spread" : false
+},{
+	"title" : "今天",
+	"icon" : "icon-text",
+	"href" : "page/today/today.html",
+	"spread" : false
+},{
+	"title" : "最近七天",
+	"icon" : "&#xe64c;",
+	"href" : "page/week/week.html",
+	"spread" : false
+},{
+	"title" : "最近一个月",
+	"icon" : "&#xe631;",
+	"href" : "page/month/month.html",
+	"spread" : false
+}]
