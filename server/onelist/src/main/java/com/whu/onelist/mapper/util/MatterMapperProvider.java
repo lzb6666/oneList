@@ -29,6 +29,7 @@ public class MatterMapperProvider {
                 if (matter.getPriority()!=0){
                     SET("priority=#{#priority}");
                 }
+                SET("status=#{status}");
                 WHERE("matter_id=#{matterID}");
                 WHERE("user_id=#{userID}");
             }

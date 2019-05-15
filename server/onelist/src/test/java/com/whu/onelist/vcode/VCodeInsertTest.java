@@ -26,7 +26,7 @@ public class VCodeInsertTest {
     public void insertTest(){
         Timestamp timestamp=new Timestamp(System.currentTimeMillis());
 
-        mapper.insert("123456","1234",1,timestamp);
+        //mapper.insert("123456","1234",1,timestamp);
     }
 
     @Test
