@@ -31,4 +31,8 @@ public interface MatterMapper {
     @Select("select matter_id,user_id,caption,detail,remind_time,remind_interval,priority,status from matter where " +
             "user_id=#{userID} and remind_time > #{startTime} and remind_time <#{endTime}")
     List<Matter> selectMattersByDate(@Param("startTime") Timestamp startTime, @Param("endTime") Timestamp endTime, @Param("userID") Long userID);
+
+    @Select("select matter_id,user_id,caption,detail,remind_time,remind_interval,priority,status from matter where " +
+            "user_id=#{userID}")
+    List<Matter> selectMatters(Long userID);
 }

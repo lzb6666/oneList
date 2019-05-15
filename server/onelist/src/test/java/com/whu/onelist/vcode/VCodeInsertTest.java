@@ -29,4 +29,11 @@ public class VCodeInsertTest {
         mapper.insert("123456","1234",1,timestamp);
     }
 
+    @Test
+    public void timeStamp(){
+        Timestamp timestamp=new Timestamp(System.currentTimeMillis());
+        System.out.println(System.currentTimeMillis());
+        System.out.println(timestamp);
+    }
+
 }

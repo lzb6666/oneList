@@ -53,13 +53,13 @@ public class MatterService {
 
     List<Matter> selectMattersByDate(Timestamp startTime, Timestamp endTime, Long userID){
         if (startTime==null&&endTime==null){
-            startTime=new Timestamp(0);
-            endTime=new Timestamp(System.currentTimeMillis());
+            return matterMapper.selectMatters(userID);
         }
         return matterMapper.selectMattersByDate(startTime,endTime,userID);
     }
 
     Matter autoAdd(String content,Long userID){
+        content=convert(content);
         Matter matter=new Matter();
         matter.setRemindTime(handler.process(content));
         matter.setDetail(content);
@@ -71,5 +71,77 @@ public class MatterService {
             log.error(content);
             return null;
         }
+    }
+
+    String convert(String str)
+    {
+        char[] chars = str.toCharArray();
+        for(int i = 0; i < chars.length; i++)
+        {
+            char temp = 'n';
+            char current = chars[i];
+            switch (current)
+            {
+                case '一':
+                    temp = '1';
+                    break;
+                case '二':
+                    temp = '2';
+                    break;
+                case '三':
+                    temp = '3';
+                    break;
+                case '四':
+                    temp = '4';
+                    break;
+                case '五':
+                    temp = '5';
+                    break;
+                case '六':
+                    temp = '6';
+                    break;
+                case '七':
+                    temp = '7';
+                    break;
+                case '八':
+                    temp = '8';
+                    break;
+                case '九':
+                    temp = '9';
+                    break;
+                case '零':
+                    temp = '0';
+                    break;
+                case '十':
+                    if(Character.isDigit(chars[i-1]))
+                    {
+                        for(int j = 0; j < chars.length - i - 1; j++)
+                        {
+                            chars[i + j] = chars[i + j + 1];
+                        }
+                        chars[chars.length - 1] = ' ';
+                        i--;
+                        break;
+                    }
+                    else
+                    {
+                        temp = '1';
+                        break;
+                    }
+                default:
+                    temp = 'n';
+            }
+            if(temp != 'n')
+            {
+                chars[i] = temp;
+            }
+        }
+
+        String result = "";
+        for (int k = 0; k < chars.length; k++){
+            if(chars[k] != ' ')
+                result += chars[k];
+        }
+        return result;
     }
 }
